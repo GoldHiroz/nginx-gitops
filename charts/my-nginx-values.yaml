@@ -1,0 +1,19 @@
+serviceMonitor:
+  enabled: true
+  additionalLabels:
+    release: kube-prom-stack
+
+extraContainers:
+  - name: nginx-server
+    image: nginx:alpine
+    ports:
+      - containerPort: 80
+      - containerPort: 8080 # <-- EZT ADTUK HOZZÁ
+    volumeMounts:
+      - name: nginx-config
+        mountPath: /etc/nginx/conf.d
+
+extraVolumes:
+  - name: nginx-config
+    configMap:
+      name: nginx-enhanced-config
